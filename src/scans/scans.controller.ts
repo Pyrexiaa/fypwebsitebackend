@@ -43,4 +43,11 @@ export class ScansController {
   findOneMother(@Param('id', ParseIntPipe) id: number) {
     return this.scansService.findOneMother(id);
   }
+
+  @Get('mother/all-related-scans/:id')
+  findOneMotherScans(@Param('id', ParseIntPipe) id: number) {
+    return this.scansService.findAllScansOfMother(id);
+  }
+
+  // TODO: Update mother details
 }

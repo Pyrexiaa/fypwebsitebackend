@@ -10,9 +10,9 @@ export class ScansService {
     console.log('Mother DTO: ', MotherDto);
     const mother = await this.prisma.mother.create({
       data: {
-        age: MotherDto.age,
-        height: MotherDto.height,
-        weight: MotherDto.weight,
+        age: Number(MotherDto.age),
+        height: Number(MotherDto.height),
+        weight: Number(MotherDto.weight),
         PreviouslyFailedPregnancy: MotherDto.PreviouslyFailedPregnancy,
         HighRiskPreeclampsia: MotherDto.HighRiskPreeclampsia,
         PregnancyInducedHypertension: MotherDto.PregnancyInducedHypertension,
@@ -53,10 +53,8 @@ export class ScansService {
   }
 
   // Find one scan
-  async findOne(userId: number) {
-    if (typeof userId !== 'number') {
-      throw new Error('ID must be a number');
-    }
+  async findOne(inputId: number) {
+    const userId = Number(inputId);
 
     const scans = await this.prisma.scans.findUnique({
       where: { id: userId },
@@ -75,31 +73,20 @@ export class ScansService {
     return allScans;
   }
 
-  // Backup Plan - To call the function multiple times
-  // async findTopN(max: number) {
-  //   const totalScans = [];
-
-  //   for (let i = 1; i <= max; i++) {
-  //     const scan = await this.prisma.scans.findUnique({
-  //       where: { id: i },
-  //     });
-
-  //     if (scan) {
-  //       totalScans.push(scan);
-  //     }
-  //   }
-
-  //   return totalScans;
-  // }
-
   // TODO: Find all scans that is related to a mother
+  async findAllScansOfMother(inputId: number) {
+    const motherId = Number(inputId);
+    const allScansOfMother = await this.prisma.scans.findMany({
+      where: {
+        motherId: motherId,
+      },
+    });
+    return allScansOfMother;
+  }
 
-  // TODO: Find one mother details
   // Find one scan
-  async findOneMother(userId: number) {
-    if (typeof userId !== 'number') {
-      throw new Error('ID must be a number');
-    }
+  async findOneMother(inputId: number) {
+    const userId = Number(inputId);
 
     const mother = await this.prisma.mother.findUnique({
       where: { id: userId },
