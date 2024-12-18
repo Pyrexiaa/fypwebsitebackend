@@ -47,4 +47,5 @@ model Scans {
   umb_api       Float?
   placenta_site Int?
   af            Int?
+  sga           Int?
 }
