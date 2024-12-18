@@ -13,8 +13,15 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply((req, res, next) => {
-        const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000'; // Fallback URL
-        res.setHeader('Access-Control-Allow-Origin', frontendUrl); // Frontend URL
+        const allowedOrigins = [
+          'http://localhost:3000', // Add more allowed URLs here
+          'https://fypwebsite.vercel.app/',
+        ];
+
+        const origin = req.headers.origin;
+        if (allowedOrigins.includes(origin)) {
+          res.setHeader('Access-Control-Allow-Origin', origin); // Allow the request from the matching origin
+        }
         res.setHeader(
           'Access-Control-Allow-Methods',
           'GET,HEAD,PUT,PATCH,POST,DELETE',

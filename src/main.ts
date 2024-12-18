@@ -15,7 +15,11 @@ async function bootstrap() {
 
   // Enable CORS with the frontend URL
   app.enableCors({
-    origin: ['https://fypwebsitebackend-drab.vercel.app/', frontendUrl],
+    origin: [
+      'https://fypwebsitebackend-drab.vercel.app/',
+      'https://fypwebsite.vercel.app/',
+      frontendUrl,
+    ],
     methods: 'GET, HEAD, PUT, POST, DELETE, OPTIONS, PATCH',
     credentials: true,
     allowedHeaders:
