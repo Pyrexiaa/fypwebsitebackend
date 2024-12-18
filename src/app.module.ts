@@ -13,7 +13,8 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply((req, res, next) => {
-        res.setHeader('Access-Control-Allow-Origin', process.env.FRONTEND_URL); // Frontend URL
+        const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000'; // Fallback URL
+        res.setHeader('Access-Control-Allow-Origin', frontendUrl); // Frontend URL
         res.setHeader(
           'Access-Control-Allow-Methods',
           'GET,HEAD,PUT,PATCH,POST,DELETE',
