@@ -16,6 +16,7 @@ export class ScansController {
 
   @Post('new-mother')
   createMother(@Body() MotherDto: MotherDto) {
+    console.log('Received new mother data:', MotherDto);
     return this.scansService.createMother(MotherDto);
   }
 
