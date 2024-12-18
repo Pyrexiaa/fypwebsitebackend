@@ -1,16 +1,10 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Mother {
@@ -28,10 +22,8 @@ model Mother {
 }
 
 model Scans {
-  id            Int     @id @default(autoincrement())
+  id            Int    @id @default(autoincrement())
   motherId      Int
-  mother        Mother  @relation("MotherToScans", fields: [motherId], references: [id])
-  gender        Int
   ga            Int
   bpd           Float?
   hc            Float
@@ -44,7 +36,9 @@ model Scans {
   ute_ari       Float?
   ute_api       Float?
   umb_api       Float?
+  gender        Int
   placenta_site Int?
   af            Int?
   sga           Int?
+  mother        Mother @relation("MotherToScans", fields: [motherId], references: [id])
 }
