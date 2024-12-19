@@ -21,9 +21,28 @@ async function bootstrap() {
       frontendUrl,
     ],
     methods: 'GET, HEAD, PUT, POST, DELETE, OPTIONS, PATCH',
-    credentials: true,
+    credentials: false,
     allowedHeaders:
       'Origin, X-Requested-With, Content-Type, Accept, Authentication, Access-Control-Allow-Credentials, Access-Control-Allow-Headers, Access-Control-Allow-Methods, Access-Control-Allow-Origin, User-Agent, Referer, Accept-Encoding, Accept-Language, Access-Control-Request-Headers, Cache-Control, Pragma',
+  });
+
+  app.use((req, res, next) => {
+    console.log('Origin:', req.headers.origin);
+    console.log('Method:', req.method);
+    console.log(`Request method: ${req.method}, Request URL: ${req.url}`);
+    if (req.method === 'OPTIONS') {
+      res.header(
+        'Access-Control-Allow-Methods',
+        'GET,HEAD,PUT,PATCH,POST,DELETE',
+      );
+      res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept, Authentication, Access-Control-Allow-Credentials, Access-Control-Allow-Headers, Access-Control-Allow-Methods, Access-Control-Allow-Origin, User-Agent, Referer, Accept-Encoding, Accept-Language, Access-Control-Request-Headers, Cache-Control, Pragma',
+      );
+      res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+      return res.sendStatus(204);
+    }
+    next();
   });
 
   await app.listen(3000);
