@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { ScansDto } from './dto/scans.dto';
 import { MotherDto } from './dto/mother.dto';
+import { UpdateMotherDto } from './dto/updateMotherDto';
+import { UpdateScanDto } from './dto/updateScanDto';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
@@ -73,7 +75,6 @@ export class ScansService {
     return allScans;
   }
 
-  // TODO: Find all scans that is related to a mother
   async findAllScansOfMother(inputId: number) {
     const motherId = Number(inputId);
     const allScansOfMother = await this.prisma.scans.findMany({
@@ -99,9 +100,38 @@ export class ScansService {
     return mother;
   }
 
-  // TODO: Find all mother details
   async findTopNMothers() {
     const allMothers = await this.prisma.mother.findMany();
     return allMothers;
+  }
+
+  async updateMotherColumn(updateMotherDto: UpdateMotherDto) {
+    const columnName = updateMotherDto.columnName;
+    const newValue = updateMotherDto.newValue;
+    const motherId = updateMotherDto.motherId;
+
+    const updatedMother = await this.prisma.mother.update({
+      where: { id: motherId },
+      data: {
+        [columnName]: newValue, // Dynamically update the column
+      },
+    });
+
+    return updatedMother;
+  }
+
+  async updateScanColumn(updateScanDto: UpdateScanDto) {
+    const columnName = updateScanDto.columnName;
+    const newValue = updateScanDto.newValue;
+    const userId = updateScanDto.userId;
+
+    const updatedMother = await this.prisma.scans.update({
+      where: { id: userId },
+      data: {
+        [columnName]: newValue, // Dynamically update the column
+      },
+    });
+
+    return updatedMother;
   }
 }

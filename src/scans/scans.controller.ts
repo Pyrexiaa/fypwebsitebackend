@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Patch,
   Body,
   Param,
   ParseIntPipe,
@@ -9,6 +10,8 @@ import {
 import { ScansService } from './scans.service';
 import { ScansDto } from './dto/scans.dto';
 import { MotherDto } from './dto/mother.dto';
+import { UpdateMotherDto } from './dto/updateMotherDto';
+import { UpdateScanDto } from './dto/updateScanDto';
 
 @Controller('scans')
 export class ScansController {
@@ -50,5 +53,13 @@ export class ScansController {
     return this.scansService.findAllScansOfMother(id);
   }
 
-  // TODO: Update mother details
+  @Patch('update-mother')
+  updateMotherColumn(@Body() UpdateMotherDto: UpdateMotherDto) {
+    return this.scansService.updateMotherColumn(UpdateMotherDto);
+  }
+
+  @Patch('update-scan')
+  updateScanColumn(@Body() UpdateScanDto: UpdateScanDto) {
+    return this.scansService.updateScanColumn(UpdateScanDto);
+  }
 }
