@@ -1,7 +1,9 @@
 export class MotherDto {
+  name: string;
   age: number;
   height: number;
   weight: number;
+  hospital: string;
   PreviouslyFailedPregnancy: boolean;
   HighRiskPreeclampsia: boolean;
   PregnancyInducedHypertension: boolean;

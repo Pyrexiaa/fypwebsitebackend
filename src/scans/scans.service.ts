@@ -12,9 +12,11 @@ export class ScansService {
     console.log('Mother DTO: ', MotherDto);
     const mother = await this.prisma.mother.create({
       data: {
+        name: MotherDto.name,
         age: Number(MotherDto.age),
         height: Number(MotherDto.height),
         weight: Number(MotherDto.weight),
+        hospital: MotherDto.hospital,
         PreviouslyFailedPregnancy: MotherDto.PreviouslyFailedPregnancy,
         HighRiskPreeclampsia: MotherDto.HighRiskPreeclampsia,
         PregnancyInducedHypertension: MotherDto.PregnancyInducedHypertension,
