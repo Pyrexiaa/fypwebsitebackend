@@ -51,6 +51,7 @@ export class ScansService {
         umb_api: ScansDto.umb_api,
         placenta_site: ScansDto.placenta_site,
         af: ScansDto.af,
+        sga: ScansDto.sga,
       },
     });
     return scan;

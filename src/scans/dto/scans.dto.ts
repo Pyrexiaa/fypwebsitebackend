@@ -15,4 +15,5 @@ export class ScansDto {
   umb_api: number;
   placenta_site: number;
   af: number;
+  sga: number;
 }
